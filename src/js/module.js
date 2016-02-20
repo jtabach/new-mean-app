@@ -6,5 +6,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
 			url:'/', 
 			templateUrl:'./partials/home.html', 
 			controller: 'homeCtrl'
-		})
+		});
+
+	$urlRouterProvider.otherwise('/');
+});
+
+app.controller('homeCtrl', function($scope, $http, $state) {
+	console.log('home');
 })
