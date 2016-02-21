@@ -12,12 +12,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
 		.state('login', {
 			url: '/login',
 			templateUrl: './partials/login.html',
-			controller: 'loginCtrl'
+			controller: 'splashCtrl'
 		})
 		.state('register', {
 			url: '/register',
 			templateUrl: './partials/register.html',
-			controller: 'registerCtrl'
+			controller: 'splashCtrl'
 		})
 		.state('home', {
 			url: '/home',
@@ -28,15 +28,30 @@ app.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/');
 });
 
+app.controller('mainCtrl', function($scope, User) {
+	$scope.user = User;
+
+	// $scope.add = function(desc) {
+	// 	$scope.list.$add({
+	// 		desc: desc,
+	// 		complete: false
+	// 	});
+
+	// 	$scope.desc="";
+	// }
+});
+
 app.controller('splashCtrl', function($scope, $http, $state, Auth) {
 	console.log('splash');
-	$scope.Auth.register({
-		email: $scope.user.email,
-		password: $scope.user.password
-	})
-	.then(redirectHome)
-	.catch(existingUser);
-
+	console.log($scope);
+	$scope.register = function() {
+ 		Auth.register({
+			email: $scope.user.email,
+			password: $scope.user.password
+		})
+		.then(redirectHome)
+		.catch(existingUser);
+	}
 	function redirectHome(authData) {
 		console.log('authData:', authData);
 		$state.go('home');
@@ -50,12 +65,26 @@ app.controller('splashCtrl', function($scope, $http, $state, Auth) {
 		invalidEntry(authData, 'Email already exists')
 	}
 
+	function invalidEntry(err, message) {
+			// resetForm();
+			alert(message);
+			console.log('err:', err)
+		}
 
 })
 
 app.controller('navCtrl', function($scope) {
 	console.log('Nav');
 })
+
+app.controller('homeCtrl', function($scope) {
+
+})
+
+app.factory('User', function(fbRef, $firebaseObject) {
+	var userRef = fbRef.child('user');
+	return $firebaseObject(userRef);
+});
 
 app.factory('fbRef', function($window) {
 	return new $window.Firebase('https://newmeanapp.firebaseio.com/');

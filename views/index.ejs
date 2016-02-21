@@ -19,7 +19,7 @@
     <link rel='stylesheet' href='/css/style.css' />
 
   </head>
-  <body>
+  <body ng-controller="mainCtrl">
     <nav ng-controller="navCtrl" class="navbar navbar-default navbar-static-top">
 	    <div class="container">
 	      <div class="navbar-header">
@@ -34,9 +34,9 @@
 	        </ul>
 	        <ul class="nav navbar-nav navbar-right">
 	          <div ng-submit="loginUser()" role="search" class="navbar-form navbar-left" id="loginForm">
-	            <button type="submit" class="btn btn-default"><a href="/login"></a>Sign In</button></button>
-	            <button type="button" class="btn btn-primary"><a href="/register"></a>Sign Up</button>
-	            <button type="button" class="btn btn-primary"><a href="/users/logout"></a>Logout</button>
+	            <button type="submit" class="btn btn-default" ui-sref='login'>Sign In</button></button>
+	            <button type="button" class="btn btn-primary" ui-sref='register'>Sign Up</button>
+	            <button type="button" class="btn btn-primary" ui-sref='logout'>Logout</button>
 	          </div>
 	        </ul>
 	      </div>
